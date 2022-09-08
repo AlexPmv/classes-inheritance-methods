@@ -17,4 +17,21 @@ export default class Character {
   }
 
   static characterTypes = ['Bowman', 'Swordsman', 'Magician', 'Daemon', 'Undead', 'Zombie'];
+
+  levelUp() {
+    if (this.health <= 0) {
+      throw new Error('Нельзя повышать level мертвого персонажа');
+    }
+    this.level += 1;
+    this.health = 100;
+    this.attack *= 1.2;
+    this.defence *= 1.2;
+  }
+
+  damage(points) {
+    if (this.health <= 0) {
+      throw new Error('Персонаж уже мертв');
+    }
+    this.health -= points * (1 - this.defence / 100);
+  }
 }

@@ -25,6 +25,51 @@ test('testing class Character with valid name and type', () => {
   });
 });
 
+test('level up character', () => {
+  const character = new Character('Vasya', 'Bowman');
+  character.health = 10;
+  character.levelUp();
+  expect(character).toEqual({
+    name: 'Vasya',
+    type: 'Bowman',
+    health: 100,
+    level: 2,
+    attack: 12,
+    defence: 12,
+  });
+});
+
+test('level up character with health <= 0', () => {
+  const character = new Character('Vasya', 'Bowman');
+  character.health = 0;
+  expect(() => character.levelUp()).toThrowError('Нельзя повышать level мертвого персонажа');
+});
+
+test('level up character with health > 0', () => {
+  const character = new Character('Vasya', 'Bowman');
+  character.levelUp();
+  expect(character).toEqual({
+    name: 'Vasya',
+    type: 'Bowman',
+    health: 100,
+    level: 2,
+    attack: 12,
+    defence: 12,
+  });
+});
+
+test('Calculate damage with health <= 0', () => {
+  const character = new Character('Vasya', 'Bowman');
+  character.health = 0;
+  expect(() => character.damage(10)).toThrowError('Персонаж уже мертв');
+});
+
+test('Calculate damage with health > 0', () => {
+  const character = new Character('Vasya', 'Bowman');
+  character.damage(10);
+  expect(character.health).toBe(91);
+});
+
 test('testing class Bowman', () => {
   expect(new Bowman('Vasya', 'Bowman')).toEqual({
     name: 'Vasya',
